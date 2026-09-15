@@ -3,8 +3,11 @@ const arrowEl = document.querySelector("#arrow");
 const glucoseEl = document.querySelector("#glucose");
 const clockEl = document.querySelector("#clock");
 const readingTimeEl = document.querySelector("#reading-time");
+const wakeLockButton = document.querySelector("#wake-lock");
 
 let lastReading = null;
+let wakeLock = null;
+let keepAwakeRequested = false;
 
 const clockFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "America/New_York",
@@ -59,8 +62,35 @@ async function refreshGlucose() {
   }
 }
 
+async function keepScreenOn() {
+  if (!("wakeLock" in navigator)) {
+    wakeLockButton.textContent = "Screen Wake Not Supported";
+    return;
+  }
+  try {
+    keepAwakeRequested = true;
+    wakeLock = await navigator.wakeLock.request("screen");
+    wakeLockButton.textContent = "Screen Will Stay On";
+    wakeLockButton.classList.add("active");
+    wakeLock.addEventListener("release", () => {
+      wakeLockButton.textContent = "Keep Screen On";
+      wakeLockButton.classList.remove("active");
+    }, { once: true });
+  } catch (error) {
+    wakeLockButton.textContent = "Tap Again to Keep Screen On";
+    console.error(error);
+  }
+}
+
+wakeLockButton.addEventListener("click", keepScreenOn);
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible" && keepAwakeRequested && wakeLock?.released) {
+    keepScreenOn();
+  }
+});
+
 updateClock();
 refreshGlucose();
 setInterval(updateClock, 1000);
 setInterval(refreshGlucose, 60000);
-
