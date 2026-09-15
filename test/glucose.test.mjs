@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { normalizeReading, parseDexcomTimestamp } from "../netlify/functions/glucose.mjs";
+import { normalizeReading, parseDexcomTimestamp } from "../netlify/functions/glucose.mts";
 
 test("parses Dexcom Share timestamps", () => {
   assert.equal(parseDexcomTimestamp("/Date(1789442179089-0400)/"), 1789442179089);
@@ -18,4 +18,3 @@ test("normalizes a falling glucose reading", () => {
     }
   );
 });
-
