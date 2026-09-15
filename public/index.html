@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#050505">
     <title>Andrew's Blood Sugar</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles.css?v=2">
   </head>
   <body>
     <main aria-live="polite">
@@ -19,10 +19,11 @@
       </div>
       <div class="controls" aria-label="Display controls">
         <button id="dim-down" class="brightness-button" type="button" aria-label="Dim display">▼</button>
+        <span id="brightness-level" aria-live="polite">4/7</span>
         <button id="wake-lock" type="button">Keep Screen On</button>
         <button id="dim-up" class="brightness-button" type="button" aria-label="Brighten display">▲</button>
       </div>
     </main>
-    <script type="module" src="/app.js"></script>
+    <script type="module" src="/app.js?v=2"></script>
   </body>
 </html>
