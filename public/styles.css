@@ -101,6 +101,14 @@ main {
   font-size: clamp(1.1rem, 4vw, 1.6rem);
 }
 
+#brightness-level {
+  color: #555;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.brightness-button:disabled { opacity: 0.25; }
+
 #wake-lock.active {
   border-color: #245d35;
   color: #397548;
