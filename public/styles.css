@@ -66,6 +66,23 @@ main {
   font-size: clamp(0.9rem, 3vw, 1.5rem);
 }
 
+#wake-lock {
+  margin-top: clamp(2rem, 7vw, 4rem);
+  padding: 0.8rem 1.25rem;
+  border: 1px solid #555;
+  border-radius: 999px;
+  background: #171717;
+  color: #d8d8d8;
+  font: inherit;
+  font-size: clamp(0.9rem, 3vw, 1.3rem);
+  font-weight: 650;
+}
+
+#wake-lock.active {
+  border-color: #245d35;
+  color: #70d98b;
+}
+
 .low { color: #ff4d4f; }
 .high { color: #ffb020; }
 .stale { color: #ffb020; }
@@ -77,4 +94,5 @@ main {
   .unit { margin-top: 2vh; font-size: min(4vh, 2.8vw); }
   #clock { margin-top: 7vh; font-size: min(18vh, 12vw); }
   .reading-time { margin-top: 2vh; font-size: min(3.5vh, 2.2vw); }
+  #wake-lock { margin-top: 4vh; }
 }
