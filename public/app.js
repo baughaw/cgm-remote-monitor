@@ -4,11 +4,36 @@ const glucoseEl = document.querySelector("#glucose");
 const clockEl = document.querySelector("#clock");
 const readingTimeEl = document.querySelector("#reading-time");
 const wakeLockButton = document.querySelector("#wake-lock");
+const displayEl = document.querySelector("#display");
+const dimDownButton = document.querySelector("#dim-down");
+const dimUpButton = document.querySelector("#dim-up");
 
 let lastReading = null;
 let wakeLock = null;
 let keepAwakeRequested = false;
 let refreshTimer = null;
+const brightnessLevels = [0.08, 0.14, 0.22, 0.32, 0.45, 0.65, 1];
+let brightnessIndex = Number(localStorage.getItem("brightnessLevel"));
+if (!Number.isInteger(brightnessIndex) || brightnessIndex < 0 || brightnessIndex >= brightnessLevels.length) {
+  brightnessIndex = 3;
+}
+
+function applyBrightness() {
+  displayEl.style.opacity = brightnessLevels[brightnessIndex];
+  localStorage.setItem("brightnessLevel", brightnessIndex);
+  dimDownButton.disabled = brightnessIndex === 0;
+  dimUpButton.disabled = brightnessIndex === brightnessLevels.length - 1;
+}
+
+dimDownButton.addEventListener("click", () => {
+  brightnessIndex = Math.max(0, brightnessIndex - 1);
+  applyBrightness();
+});
+
+dimUpButton.addEventListener("click", () => {
+  brightnessIndex = Math.min(brightnessLevels.length - 1, brightnessIndex + 1);
+  applyBrightness();
+});
 
 const clockFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "America/New_York",
@@ -113,5 +138,6 @@ document.addEventListener("visibilitychange", () => {
 });
 
 updateClock();
+applyBrightness();
 refreshGlucose();
 setInterval(updateClock, 1000);
