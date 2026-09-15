@@ -120,10 +120,10 @@ main {
 .error { color: #9b3c3c; }
 
 @media (orientation: landscape) {
-  main { padding: 3vw; }
+  main { padding: 2vh 3vw; }
   .glucose { font-size: min(34vh, 25vw); }
   .unit { margin-top: 2vh; font-size: min(4vh, 2.8vw); }
-  #clock { margin-top: 7vh; font-size: min(18vh, 12vw); }
+  #clock { margin-top: 4vh; font-size: min(18vh, 12vw); }
   .reading-time { margin-top: 2vh; font-size: min(3.5vh, 2.2vw); }
-  .controls { margin-top: 4vh; }
+  .controls { margin-top: 2vh; }
 }
