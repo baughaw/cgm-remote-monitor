@@ -7,22 +7,26 @@ const wakeLockButton = document.querySelector("#wake-lock");
 const displayEl = document.querySelector("#display");
 const dimDownButton = document.querySelector("#dim-down");
 const dimUpButton = document.querySelector("#dim-up");
+const brightnessLevelEl = document.querySelector("#brightness-level");
 
 let lastReading = null;
 let wakeLock = null;
 let keepAwakeRequested = false;
 let refreshTimer = null;
 const brightnessLevels = [0.08, 0.14, 0.22, 0.32, 0.45, 0.65, 1];
-let brightnessIndex = Number(localStorage.getItem("brightnessLevel"));
+let savedBrightness = null;
+try { savedBrightness = localStorage.getItem("brightnessLevel"); } catch {}
+let brightnessIndex = savedBrightness === null ? 3 : Number(savedBrightness);
 if (!Number.isInteger(brightnessIndex) || brightnessIndex < 0 || brightnessIndex >= brightnessLevels.length) {
   brightnessIndex = 3;
 }
 
 function applyBrightness() {
   displayEl.style.opacity = brightnessLevels[brightnessIndex];
-  localStorage.setItem("brightnessLevel", brightnessIndex);
+  try { localStorage.setItem("brightnessLevel", String(brightnessIndex)); } catch {}
   dimDownButton.disabled = brightnessIndex === 0;
   dimUpButton.disabled = brightnessIndex === brightnessLevels.length - 1;
+  brightnessLevelEl.textContent = `${brightnessIndex + 1}/${brightnessLevels.length}`;
 }
 
 dimDownButton.addEventListener("click", () => {
