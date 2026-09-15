@@ -4,8 +4,8 @@ A minimal, public Netlify display for the latest Dexcom Share glucose reading an
 
 ## Deploy to Netlify
 
-1. Create a new GitHub repository and add these files.
-2. In Netlify, choose **Add new project → Import an existing project** and select the repository.
+1. In Netlify, choose **Add new project → Import an existing project** and select `baughaw/cgm-remote-monitor`.
+2. Set the production branch to `minimal-glucose-display`.
 3. Netlify reads `netlify.toml`; no build command is required.
 4. In **Project configuration → Environment variables**, add:
    - `DEXCOM_USERNAME`: the login used by the active Dexcom G7 app (not necessarily the Clarity login)
