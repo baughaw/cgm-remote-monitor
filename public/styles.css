@@ -22,6 +22,13 @@ main {
   text-align: center;
 }
 
+#display {
+  display: grid;
+  justify-items: center;
+  opacity: 0.4;
+  transition: opacity 180ms ease;
+}
+
 .glucose {
   display: flex;
   align-items: center;
@@ -68,8 +75,16 @@ main {
   font-size: clamp(0.9rem, 3vw, 1.5rem);
 }
 
-#wake-lock {
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
   margin-top: clamp(2rem, 7vw, 4rem);
+}
+
+#wake-lock,
+.brightness-button {
   padding: 0.8rem 1.25rem;
   border: 1px solid #555;
   border-radius: 999px;
@@ -78,6 +93,12 @@ main {
   font: inherit;
   font-size: clamp(0.9rem, 3vw, 1.3rem);
   font-weight: 650;
+}
+
+.brightness-button {
+  min-width: 3.25rem;
+  padding-inline: 0.9rem;
+  font-size: clamp(1.1rem, 4vw, 1.6rem);
 }
 
 #wake-lock.active {
@@ -96,5 +117,5 @@ main {
   .unit { margin-top: 2vh; font-size: min(4vh, 2.8vw); }
   #clock { margin-top: 7vh; font-size: min(18vh, 12vw); }
   .reading-time { margin-top: 2vh; font-size: min(3.5vh, 2.2vw); }
-  #wake-lock { margin-top: 4vh; }
+  .controls { margin-top: 4vh; }
 }
