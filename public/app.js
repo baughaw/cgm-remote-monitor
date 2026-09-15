@@ -8,6 +8,7 @@ const wakeLockButton = document.querySelector("#wake-lock");
 let lastReading = null;
 let wakeLock = null;
 let keepAwakeRequested = false;
+let refreshTimer = null;
 
 const clockFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "America/New_York",
@@ -47,18 +48,32 @@ function showReading(reading) {
   updateReadingAge();
 }
 
+function scheduleNextRefresh(readingTimestamp) {
+  clearTimeout(refreshTimer);
+  const readingInterval = 5 * 60 * 1000;
+  const uploadBuffer = 20_000;
+  const elapsed = Math.max(0, Date.now() - readingTimestamp - uploadBuffer);
+  const intervalsAhead = Math.floor(elapsed / readingInterval) + 1;
+  const expectedNextReading = readingTimestamp + (intervalsAhead * readingInterval) + uploadBuffer;
+  const delay = Math.max(30_000, expectedNextReading - Date.now());
+  refreshTimer = setTimeout(refreshGlucose, delay);
+}
+
 async function refreshGlucose() {
   try {
     const response = await fetch("/api/glucose", { cache: "no-store" });
     const body = await response.json();
     if (!response.ok) throw new Error(body.error || "Dexcom request failed");
     showReading(body);
+    scheduleNextRefresh(body.timestamp);
   } catch (error) {
     readingTimeEl.textContent = lastReading
       ? "Unable to refresh · showing the last reading"
       : "Unable to load Dexcom reading";
     readingTimeEl.className = "reading-time error";
     console.error(error);
+    clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(refreshGlucose, 60_000);
   }
 }
 
@@ -88,9 +103,15 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible" && keepAwakeRequested && wakeLock?.released) {
     keepScreenOn();
   }
+  if (
+    document.visibilityState === "visible" &&
+    (!lastReading || Date.now() - lastReading.timestamp > 5 * 60 * 1000)
+  ) {
+    clearTimeout(refreshTimer);
+    refreshGlucose();
+  }
 });
 
 updateClock();
 refreshGlucose();
 setInterval(updateClock, 1000);
-setInterval(refreshGlucose, 60000);
