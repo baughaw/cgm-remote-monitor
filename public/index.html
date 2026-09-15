@@ -9,13 +9,19 @@
   </head>
   <body>
     <main aria-live="polite">
-      <section class="glucose" id="glucose" aria-label="Current blood sugar">
-        <span id="value">---</span><span id="arrow" aria-hidden="true"></span>
-      </section>
-      <div class="unit">mg/dL</div>
-      <time id="clock">--:--</time>
-      <div id="reading-time" class="reading-time">Connecting to Dexcom…</div>
-      <button id="wake-lock" type="button">Keep Screen On</button>
+      <div id="display">
+        <section class="glucose" id="glucose" aria-label="Current blood sugar">
+          <span id="value">---</span><span id="arrow" aria-hidden="true"></span>
+        </section>
+        <div class="unit">mg/dL</div>
+        <time id="clock">--:--</time>
+        <div id="reading-time" class="reading-time">Connecting to Dexcom…</div>
+      </div>
+      <div class="controls" aria-label="Display controls">
+        <button id="dim-down" class="brightness-button" type="button" aria-label="Dim display">▼</button>
+        <button id="wake-lock" type="button">Keep Screen On</button>
+        <button id="dim-up" class="brightness-button" type="button" aria-label="Brighten display">▲</button>
+      </div>
     </main>
     <script type="module" src="/app.js"></script>
   </body>
