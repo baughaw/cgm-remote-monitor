@@ -61,7 +61,7 @@ main {
 #clock {
   margin-top: clamp(2.5rem, 8vw, 6rem);
   font-size: clamp(3.5rem, 15vw, 10rem);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1;
   letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
